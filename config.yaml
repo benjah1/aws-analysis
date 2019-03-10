@@ -1,0 +1,27 @@
+AwsAnalysis:
+  sqliteDB: "data.db"
+  load: false
+  common:
+      exclusive:
+        securitryGroup: []
+  loader:
+    - TestLoader: 
+        pkg: awsanalysis.loader.test_loader
+        enabled: true
+    - Ec2Loader:
+        pkg: awsanalysis.loader.ec2_loader
+        enabled: true
+    - SgLoader:
+        pkg: awsanalysis.loader.sg_loader
+        enabled: true
+  analyzer:
+    - TestAnalyzer:
+        pkg: awsanalysis.analyzer.test_analyzer
+        enabled: true
+    - SgNotInUsed:
+        pkg: awsanalysis.analyzer.sg_not_in_used_analyzer
+        enabled: true
+    - SgWideOpen:
+        pkg: awsanalysis.analyzer.sg_wide_open_analyzer
+        enabled: true
+
