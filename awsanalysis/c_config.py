@@ -1,13 +1,14 @@
 import yaml
 
 class CConfig:
-    def __init__(self):
-        print("-> ConfigMgr init")
+    def __init__(self, configfile):
         self._conf = None
-        self.loadConfig()
+        self.loadConfig(configfile)
 
-    def loadConfig(self):
-        with open("config.yaml", "r") as ymlfile:
+    def loadConfig(self, configfile):
+        if not configfile:
+            configfile = "config.yaml"
+        with open(configfile, "r") as ymlfile:
             conf = yaml.load(ymlfile)
         self._conf = conf.get("AwsAnalysis", {})
 

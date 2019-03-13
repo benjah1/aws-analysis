@@ -2,7 +2,6 @@ from .a_plugin_mgr import APluginMgr
 
 class CLoaderMgr(APluginMgr):
     def __init__(self, conf, dbMgr):
-        print("-> LoaderMgr init")
         self._conf = conf
         self._dbMgr = dbMgr
         self._loader = None
@@ -11,8 +10,8 @@ class CLoaderMgr(APluginMgr):
 
     def init(self):
         conf = self._conf.get("loader", [])
-        self._loader = self.loadPlugin(conf)
-        print(self._loader)
+        comm = self._conf.get("common", [])
+        self._loader = self.loadPlugin(conf, comm)
 
         for name, loader in self._loader.items():
             loader.setup()
@@ -24,7 +23,6 @@ class CLoaderMgr(APluginMgr):
         print("-> LoaderMgr sort")
 
     def load(self):
-        print("-> LoaderMgr load")
         for name, loader in self._loader.items():
             loader.load()
 
