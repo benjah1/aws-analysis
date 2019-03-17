@@ -36,6 +36,9 @@ class CAwsAnalysis:
         self._loaderMgr = CLoaderMgr(self._conf, self._dbMgr)
         self._analyzerMgr = CAnalyzerMgr(self._conf, self._dbMgr, self._loaderMgr)
 
+        self._loaderMgr.setup()
+        self._analyzerMgr.setup()
+
     def load(self):
         if self._conf.get('load', True):
             logging.debug("AwsAnalysis load")
