@@ -1,10 +1,10 @@
-import peewee  
+import peewee
 from awsanalysis.a_analyzer import AAnalyzer
 
 class SgNotInUsed(AAnalyzer):
 
     def dep(self):
-        return ["Ec2Loader", "SgLoader"]
+        return ["EniLoader", "SgLoader"]
 
     def analyze(self):
         """
@@ -13,12 +13,12 @@ class SgNotInUsed(AAnalyzer):
         """
         db = self._dbMgr.getDB()
         query = db.execute_sql("""
-SELECT 
+SELECT
     sg.id,
     sg.name
 FROM sgtable AS sg
-LEFT JOIN ec2sgtable AS ec2sg ON sg.id = ec2sg.sgid
-WHERE ec2sg.id IS NULL;
+LEFT JOIN enisgtable AS enisg ON sg.id = enisg.sgid
+WHERE enisg.id IS NULL;
         """)
 
         print("======")
@@ -28,5 +28,5 @@ WHERE ec2sg.id IS NULL;
         for row in query.fetchall():
             print("  * {}: {}".format(row[0], row[1]))
 
-        print("") 
+        print("")
 
