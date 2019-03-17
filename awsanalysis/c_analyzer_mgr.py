@@ -1,4 +1,5 @@
 from .a_plugin_mgr import APluginMgr
+import logging
 
 class CAnalyzerMgr(APluginMgr):
     def __init__(self, conf, dbMgr, loaderMgr):
@@ -11,11 +12,11 @@ class CAnalyzerMgr(APluginMgr):
 
     def init(self):
         conf = self._conf.get("analyzer", [])
-        comm = self._conf.get("common", [])
+        comm = self._conf.get("common", {})
         self._analyzer = self.loadPlugin(conf, comm)
 
     def checkDep(self):
-        print("todo")
+        logging.debug("todo")
 
     def analyze(self):
         for name, analyzer in self._analyzer.items():

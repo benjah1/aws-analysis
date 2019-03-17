@@ -8,7 +8,7 @@ class ALoader(ABC):
 
     @abstractmethod
     def dep(self):
-        pass
+        raise NotImplementedError
 
     """
     should use db instead?
@@ -18,9 +18,9 @@ class ALoader(ABC):
 
     @abstractmethod
     def setup(self):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def load(self):
-        pass
+        raise NotImplementedError
 

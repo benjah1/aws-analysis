@@ -3,6 +3,7 @@ from .c_loader_mgr import CLoaderMgr
 from .c_analyzer_mgr import CAnalyzerMgr
 from .c_db_mgr import CDBMgr
 import getopt
+import logging
 
 class CAwsAnalysis:
 
@@ -27,6 +28,7 @@ class CAwsAnalysis:
         self.setup()
         self.load()
         self.analyze()
+        return 0
 
     def setup(self):
         self._conf = CConfig(self._configfile)
@@ -36,9 +38,9 @@ class CAwsAnalysis:
 
     def load(self):
         if self._conf.get('load', True):
-            print("AwsAnalysis load")
+            logging.debug("AwsAnalysis load")
             self._loaderMgr.load();
 
     def analyze(self):
-        print("AwsAnalysis analyze")
+        logging.debug("AwsAnalysis analyze")
         self._analyzerMgr.analyze();
