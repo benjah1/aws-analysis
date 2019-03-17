@@ -14,6 +14,7 @@ install:
 
 script:
   - nosetests --with-coverage --cover-erase --cover-package awsanalysis --cover-html -v tests/functional/
+  - coveralls
 
 after_success:
   - rm -r cover
