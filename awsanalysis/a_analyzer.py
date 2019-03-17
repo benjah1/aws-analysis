@@ -6,10 +6,10 @@ class AAnalyzer(ABC):
         self._dbMgr = dbMgr
 
     @abstractmethod
-    def dep(self):
-        pass
+    def dep(self): 
+        raise NotImplementedError
 
     @abstractmethod
-    def analyze(self):
-        pass
+    def analyze(self): 
+        raise NotImplementedError
 

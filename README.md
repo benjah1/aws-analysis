@@ -1,5 +1,8 @@
 > Working in Progress 
 
+[![Build Status](https://travis-ci.org/benjah1/aws-analysis.svg?branch=develop)](https://travis-ci.org/benjah1/aws-analysis)
+[![Coverage Status](https://coveralls.io/repos/benjah1/aws-analysis/badge.png?branch=develop)](https://coveralls.io/r/benjah1/aws-analysis)
+
 # aws-analysis
 
 This package provides a command line interface to analyze AWS resource

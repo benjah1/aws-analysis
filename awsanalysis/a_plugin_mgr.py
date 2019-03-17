@@ -14,5 +14,3 @@ class APluginMgr(ABC):
             _plugins[clsName] = cls(finalConf, self._dbMgr)
 
         return _plugins
-
-    pass
