@@ -1,0 +1,12 @@
+AwsAnalysis:
+  sqliteDB: "data_test_simple.db"
+  load: true
+  loader:
+    - TestLoader: 
+        pkg: tests.functional.simple.test_loader
+        enabled: true
+  analyzer:
+    - TestAnalyzer:
+        pkg: tests.functional.simple.test_analyzer
+        enabled: true
+

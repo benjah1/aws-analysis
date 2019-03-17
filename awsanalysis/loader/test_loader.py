@@ -7,6 +7,7 @@ class TestLoader(ALoader):
 
     def setup(self):
         print("-> -> TestLoader setup db")
+        print(self._conf)
         
         db = self._dbMgr.getDB()
 

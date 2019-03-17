@@ -4,7 +4,6 @@ import datetime
 
 class CDBMgr:
     def __init__(self, conf):
-        print("-> DBMgr init")
         self._conf = conf
         dbFile = self.getDBFile()
         self._db = SqliteDatabase(dbFile)
