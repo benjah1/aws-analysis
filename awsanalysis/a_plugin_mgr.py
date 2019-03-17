@@ -2,7 +2,7 @@ import importlib
 from abc import ABC, abstractmethod
 
 class APluginMgr(ABC):
-    def loadPlugin(self, pluginConf, commonConf):
+    def initPlugin(self, pluginConf, commonConf):
         _plugins = {}
 
         for obj in pluginConf:
