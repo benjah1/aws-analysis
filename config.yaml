@@ -5,8 +5,8 @@ AwsAnalysis:
       exclusive:
         securitryGroup: []
   loader:
-    - TestLoader: 
-        pkg: awsanalysis.loader.test_loader
+    - TagLoader:
+        pkg: awsanalysis.loader.tag_loader
         enabled: true
     - Ec2Loader:
         pkg: awsanalysis.loader.ec2_loader
@@ -14,10 +14,10 @@ AwsAnalysis:
     - SgLoader:
         pkg: awsanalysis.loader.sg_loader
         enabled: true
-  analyzer:
-    - TestAnalyzer:
-        pkg: awsanalysis.analyzer.test_analyzer
+    - EniLoader:
+        pkg: awsanalysis.loader.eni_loader
         enabled: true
+  analyzer:
     - SgNotInUsed:
         pkg: awsanalysis.analyzer.sg_not_in_used_analyzer
         enabled: true

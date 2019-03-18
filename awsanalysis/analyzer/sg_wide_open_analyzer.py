@@ -1,10 +1,10 @@
-import peewee  
+import peewee
 from awsanalysis.a_analyzer import AAnalyzer
 
 class SgWideOpen(AAnalyzer):
 
     def dep(self):
-        return ["Ec2Loader", "SgLoader"]
+        return {"SgLoader"}
 
     def analyze(self):
         """
@@ -12,16 +12,16 @@ class SgWideOpen(AAnalyzer):
         """
         db = self._dbMgr.getDB()
         query = db.execute_sql("""
-SELECT 
-    sg.id, 
+SELECT
+    sg.id,
     sg.name,
     sgr.source,
     sgr.protocol,
     sgr.fromPort,
-    sgr.toPort 
+    sgr.toPort
 FROM sgruletable AS sgr
 LEFT JOIN sgtable AS sg ON sgr.sgid = sg.id
-WHERE sgr.ruletype in (1) 
+WHERE sgr.ruletype in (1)
     AND (sgr.source LIKE '0.0.0.0%' OR sgr.source LIKE '10.0.0.0%')
 ORDER BY sg.id, sgr.protocol, sgr.source, sgr.fromPort;
         """)
@@ -51,5 +51,5 @@ ORDER BY sg.id, sgr.protocol, sgr.source, sgr.fromPort;
 
             print("      {} {}".format(row[3], row[4]))
 
-        print("") 
+        print("")
 

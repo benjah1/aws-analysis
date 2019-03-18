@@ -25,9 +25,13 @@ class CAwsAnalysis:
             if opt == '-c':
                 self._configfile = arg
 
-        self.setup()
-        self.load()
-        self.analyze()
+        try:
+            self.setup()
+            self.load()
+            self.analyze()
+        except Exception as error:
+            print("Error: {}".format(error))
+            return 1
         return 0
 
     def setup(self):
@@ -36,11 +40,12 @@ class CAwsAnalysis:
         self._loaderMgr = CLoaderMgr(self._conf, self._dbMgr)
         self._analyzerMgr = CAnalyzerMgr(self._conf, self._dbMgr, self._loaderMgr)
 
+        self._loaderMgr.setup()
+        self._analyzerMgr.setup()
+
     def load(self):
         if self._conf.get('load', True):
-            logging.debug("AwsAnalysis load")
             self._loaderMgr.load();
 
     def analyze(self):
-        logging.debug("AwsAnalysis analyze")
         self._analyzerMgr.analyze();

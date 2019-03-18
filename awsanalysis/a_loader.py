@@ -10,12 +10,6 @@ class ALoader(ABC):
     def dep(self):
         raise NotImplementedError
 
-    """
-    should use db instead?
-    def getDep(self, key):
-        return self._loaderMgr.get(key)
-    """
-
     @abstractmethod
     def setup(self):
         raise NotImplementedError

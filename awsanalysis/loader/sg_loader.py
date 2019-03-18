@@ -1,10 +1,10 @@
-import peewee  
+import peewee
 from awsanalysis.a_loader import ALoader
 import boto3
 
 class SgLoader(ALoader):
     def dep(self):
-        return []
+        return set()
 
     def setup(self):
         db = self._dbMgr.getDB()
@@ -38,7 +38,7 @@ class SgLoader(ALoader):
 
     def load(self):
         filters = []
-        if self._conf.get("vpcid", False): 
+        if self._conf.get("vpcid", False):
             filters = [{
                 'Name': 'vpc-id',
                 'Values': [self._conf.get("vpcid")]
@@ -55,8 +55,10 @@ class SgLoader(ALoader):
            sgArr = sgArr + tmpSgArr
            sgRuleArr = sgRuleArr + tmpSgRuleArr
 
-        self._dbMgr.getModel("SgTable").insert_many(sgArr).execute();
-        self._dbMgr.getModel("SgRuleTable").insert_many(sgRuleArr).execute();
+        if (sgArr):
+            self._dbMgr.getModel("SgTable").insert_many(sgArr).execute();
+        if (sgRuleArr):
+            self._dbMgr.getModel("SgRuleTable").insert_many(sgRuleArr).execute();
 
     def insertSg(self, sg):
         sgData = {
@@ -67,21 +69,21 @@ class SgLoader(ALoader):
 
         marked = False
         for permission in sg.get("IpPermissions", []):
-            for ip in permission["IpRanges"]: 
+            for ip in permission["IpRanges"]:
                 sgRuleArr = sgRuleArr + self.insertRule(sg, 1, permission, ip)
                 marked = True
             for sg in permission["UserIdGroupPairs"]:
                 sgRuleArr = sgRuleArr + self.insertRule(sg, 2, permission, sg)
                 marked = True
         for permission in sg.get("IpPermissionsEgress", []):
-            for ip in permission["IpRanges"]: 
+            for ip in permission["IpRanges"]:
                 sgRuleArr = sgRuleArr + self.insertRule(sg, 6, permission, ip)
                 marked = True
             for sg in permission["UserIdGroupPairs"]:
                 sgRuleArr = sgRuleArr + self.insertRule(sg, 7, permission, sg)
                 marked = True
 
-        if not marked : 
+        if not marked :
             sgRuleArr = sgRuleArr + self.insertRule(sg, 11, {}, sg)
 
         return [sgData], sgRuleArr
@@ -90,7 +92,7 @@ class SgLoader(ALoader):
         source = ""
         if ruleType == 1 or ruleType == 6 :
             source = rule.get("CidrIp", "")
-        elif ruleType == 2 or ruleType == 7 : 
+        elif ruleType == 2 or ruleType == 7 :
             source = rule.get("GroupId", "")
         elif ruleType == 11 :
             source = str(rule) # unknown data type?

@@ -7,16 +7,19 @@ class CAnalyzerMgr(APluginMgr):
         self._dbMgr = dbMgr
         self._loaderMgr = loaderMgr
         self._analyzer = None
-        self.init()
-        self.checkDep()
 
-    def init(self):
+        # init plugin
         conf = self._conf.get("analyzer", [])
         comm = self._conf.get("common", {})
-        self._analyzer = self.loadPlugin(conf, comm)
+        self._analyzer = self.initPlugin(conf, comm)
 
-    def checkDep(self):
-        logging.debug("todo")
+    def setup(self):
+        # check dependency
+        for name, analyzer in self._analyzer.items():
+            dep = analyzer.dep()
+            for check in dep:
+                if not self._loaderMgr.get(check, None):
+                    raise Exception("Loader <{}> not found for Analyzer <{}>".format(check, name))
 
     def analyze(self):
         for name, analyzer in self._analyzer.items():
