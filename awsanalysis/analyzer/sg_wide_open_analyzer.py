@@ -4,7 +4,7 @@ from awsanalysis.a_analyzer import AAnalyzer
 class SgWideOpen(AAnalyzer):
 
     def dep(self):
-        return ["SgLoader"]
+        return {"SgLoader"}
 
     def analyze(self):
         """

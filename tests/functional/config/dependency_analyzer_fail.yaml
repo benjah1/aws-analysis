@@ -1,0 +1,8 @@
+AwsAnalysis:
+  sqliteDB: "data_test_not_need.db"
+  load: true
+  analyzer:
+    - C: 
+        pkg: tests.functional.test_dependency
+        enabled: true
+

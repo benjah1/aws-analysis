@@ -1,4 +1,5 @@
 from .a_plugin_mgr import APluginMgr
+from toposort import toposort_flatten
 import logging
 
 class CLoaderMgr(APluginMgr):
@@ -6,6 +7,7 @@ class CLoaderMgr(APluginMgr):
         self._conf = conf
         self._dbMgr = dbMgr
         self._loader = None
+        self._order = None
 
         # init plugin
         conf = self._conf.get("loader", [])
@@ -18,11 +20,20 @@ class CLoaderMgr(APluginMgr):
         self.sort()
 
     def sort(self):
-        logging.debug("-> LoaderMgr sort")
+        data = {}
+        # check dependency
+        for name, loader in self._loader.items():
+            dep = loader.dep()
+            for check in dep:
+                if not self.get(check, None):
+                    raise Exception("Loader <{}> not found for Loader <{}>".format(check, name))
+            data[name] = dep
+
+        self._order = toposort_flatten(data)
 
     def load(self):
-        for name, loader in self._loader.items():
-            loader.load()
+        for name in self._order:
+            self.get(name).load()
 
     def get(self, *args):
         return self._loader.get(*args)
