@@ -5,11 +5,16 @@ class CConfig:
         self._conf = None
         self.loadConfig(configfile)
 
+
     def loadConfig(self, configfile):
         if not configfile:
             configfile = "config.yaml"
-        with open(configfile, "r") as ymlfile:
-            conf = yaml.load(ymlfile)
+        try:
+            with open(configfile, "r") as ymlfile:
+                conf = yaml.load(ymlfile)
+        except:
+            raise Exception("Config <{}> not found".format(configfile))
+
         self._conf = conf.get("AwsAnalysis", {})
 
     def get(self, *args):

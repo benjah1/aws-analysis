@@ -15,7 +15,11 @@ class CAnalyzerMgr(APluginMgr):
 
     def setup(self):
         # check dependency
-        logging.debug("todo")
+        for name, analyzer in self._analyzer.items():
+            dep = analyzer.dep()
+            for check in dep:
+                if not self._loaderMgr.get(check, None):
+                    raise Exception("Loader <{}> not found for Analyzer <{}>".format(check, name))
 
     def analyze(self):
         for name, analyzer in self._analyzer.items():

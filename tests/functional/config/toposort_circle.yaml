@@ -1,0 +1,11 @@
+AwsAnalysis:
+  sqliteDB: "data_test_not_need.db"
+  load: true
+  loader:
+    - E: 
+        pkg: tests.functional.test_toposort
+        enabled: true
+    - F: 
+        pkg: tests.functional.test_toposort
+        enabled: true
+

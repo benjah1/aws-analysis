@@ -4,7 +4,7 @@ from awsanalysis.a_analyzer import AAnalyzer
 class SgNotInUsed(AAnalyzer):
 
     def dep(self):
-        return ["EniLoader", "SgLoader"]
+        return {"EniLoader", "SgLoader"}
 
     def analyze(self):
         """

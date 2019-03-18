@@ -5,7 +5,7 @@ import logging
 
 class EniLoader(ALoader):
     def dep(self):
-        return ["TagLoader"]
+        return {"TagLoader"}
 
     def setup(self):
         db = self._dbMgr.getDB()

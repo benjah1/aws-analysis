@@ -3,7 +3,7 @@ from awsanalysis.a_loader import ALoader
 
 class TagLoader(ALoader):
     def dep(self):
-        return []
+        return set()
 
     def setup(self):
         db = self._dbMgr.getDB()
