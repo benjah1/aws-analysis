@@ -72,15 +72,15 @@ class SgLoader(ALoader):
             for ip in permission["IpRanges"]:
                 sgRuleArr = sgRuleArr + self.insertRule(sg, 1, permission, ip)
                 marked = True
-            for sg in permission["UserIdGroupPairs"]:
-                sgRuleArr = sgRuleArr + self.insertRule(sg, 2, permission, sg)
+            for usg in permission["UserIdGroupPairs"]:
+                sgRuleArr = sgRuleArr + self.insertRule(sg, 2, permission, usg)
                 marked = True
         for permission in sg.get("IpPermissionsEgress", []):
             for ip in permission["IpRanges"]:
                 sgRuleArr = sgRuleArr + self.insertRule(sg, 6, permission, ip)
                 marked = True
-            for sg in permission["UserIdGroupPairs"]:
-                sgRuleArr = sgRuleArr + self.insertRule(sg, 7, permission, sg)
+            for usg in permission["UserIdGroupPairs"]:
+                sgRuleArr = sgRuleArr + self.insertRule(sg, 7, permission, usg)
                 marked = True
 
         if not marked :

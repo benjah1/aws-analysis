@@ -19,6 +19,7 @@ class EniLoader(ALoader):
             status = peewee.CharField()
             subnetId = peewee.CharField()
             vpcId = peewee.CharField()
+            privateIpAddress = peewee.CharField()
 
             class Meta:
                 database = db
@@ -88,7 +89,8 @@ class EniLoader(ALoader):
             "requesterId": eni.get("RequesterId", None),
             "status": eni["Status"],
             "subnetId": eni["SubnetId"],
-            "vpcId": eni["VpcId"]
+            "vpcId": eni["VpcId"],
+            "privateIpAddress": eni.get("privateIpAddress", "")
         }
 
         eniAttachArr = []
